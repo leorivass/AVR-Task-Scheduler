@@ -1,0 +1,1 @@
+avr-gcc -mmcu=atmega2560 -DF_CPU=16000000UL -Os CMakeFiles/main.helf.dir/src/main.c.o CMakeFiles/main.helf.dir/src/mcu_init.c.o CMakeFiles/main.helf.dir/src/millis.c.o CMakeFiles/main.helf.dir/src/scheduler.c.o CMakeFiles/main.helf.dir/src/usart.c.o -o main.helf 
