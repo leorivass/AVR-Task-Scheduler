@@ -24,6 +24,13 @@ void secondTask() {
 
 }
 
+void thirdTask() {
+
+	editInterval(secondTask, 10000);
+	return;
+
+}
+
 int main() {
 
 	cli();
@@ -35,7 +42,8 @@ int main() {
 	sei();
 
 	addTask(1000, firstTask); 
-	addTask(2000, secondTask);
+	addTask(1000, secondTask);
+	addTask(10000, thirdTask);
 
 	while(1) {
 
