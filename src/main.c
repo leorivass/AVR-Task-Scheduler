@@ -5,6 +5,9 @@
 #include "scheduler.h"
 #include "usart.h"
 
+#define LED1	3
+#define LED2	4
+
 void firstTask() {
 
 	PORTA ^= (1 << LED1);
