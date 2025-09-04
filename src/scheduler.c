@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "millis.h"
 #include "scheduler.h"
 #include "usart.h"
@@ -35,6 +36,36 @@ void addTask(uint32_t interval, void(*taskFunction)()) {
 	newNode->task.taskFunction = taskFunction;
 	newNode->next = head;
 	head = newNode;
+
+	return;
+
+}
+
+void editInterval(void(*taskToChange)(), uint32_t newInterval) {
+
+	TaskNode* currentTask = head;
+	bool taskFound = false;
+
+	if (currentTask == NULL) {
+		Serial_Println("Error: No hay elementos en la lista para editar");
+		return;
+
+	}
+
+	while (currentTask != NULL) {
+
+		if (taskToChange == currentTask->task.taskFunction) {
+			currentTask->task.interval = newInterval;
+			taskFound = true;
+			break;
+
+		}
+
+		currentTask = currentTask->next;
+
+	}
+
+	if (!taskFound) Serial_Println("Error: No se encontró la tarea especificada");
 
 	return;
 
