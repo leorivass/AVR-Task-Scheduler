@@ -71,6 +71,49 @@ void editInterval(void(*taskToChange)(), uint32_t newInterval) {
 
 }
 
+void deleteTask(void(*taskToDelete)()) {
+
+	TaskNode* currentTask = head;
+	TaskNode* previousTask = NULL;
+	
+	bool taskFound = false;
+
+	if (currentTask == NULL) {
+		Serial_Println("Error: No hay elementos en la lista para eliminar");
+		return;
+
+	}
+
+	while (currentTask != NULL) {
+
+		if (currentTask->task.taskFunction == taskToDelete) {
+		
+			if (currentTask == head) {
+				head = currentTask->next;
+			}
+			else {
+				previousTask->next = currentTask->next;
+			}
+
+			free(currentTask);
+
+			Serial_Println("La tarea fue eliminada exitosamente");
+			
+			taskFound = true;
+			break;
+		}
+		
+		previousTask = currentTask;
+		currentTask = currentTask->next;
+		
+	}
+
+	if (!taskFound) Serial_Println ("Error: No se encontró la tarea especificada");
+
+	return;
+
+}
+
 void executeTasks() {
  
 	TaskNode* currentTask = head;

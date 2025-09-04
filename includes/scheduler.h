@@ -3,6 +3,7 @@
 
 void addTask(uint32_t, void(*)());
 void editInterval(void(*)(), uint32_t);
+void deleteTask(void(*)());
 void executeTasks();
 
 #endif
