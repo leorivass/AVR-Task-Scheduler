@@ -6,6 +6,7 @@ A simple linked list AVR task scheduler implemented in C, designed for the Atmeg
 - Add tasks with custom intervals
 - Edit task intervals at runtime
 - Delete tasks at runtime
+- Functions to allow tasks to be enabled or disabled at runtime
 - Execute tasks based on `millis()`
 
 *The main.c code implements a quick example of the functionality of this task scheduler.*
