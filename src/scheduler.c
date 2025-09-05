@@ -1,24 +1,8 @@
 #include <avr/io.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include "millis.h"
 #include "scheduler.h"
 #include "usart.h"
-
-typedef struct Task {
-
-	uint32_t interval;
-	uint32_t lastRunTime;
-	void (*taskFunction)();
-
-} Task;
-
-typedef struct TaskNode {
-
-	Task task;
-	struct TaskNode* next;	
-
-} TaskNode;
 
 TaskNode* head = NULL;
 
@@ -27,7 +11,7 @@ void addTask(uint32_t interval, void(*taskFunction)()) {
 	TaskNode* newNode = (TaskNode*)malloc(sizeof(TaskNode));
 
 	if (newNode == NULL) {
-        Serial_Println("Error: No se pudo asignar memoria para la tarea");
+        Serial_Println("Error: Memory could not be assigned for the task");
         return;
     }
 	
@@ -43,29 +27,11 @@ void addTask(uint32_t interval, void(*taskFunction)()) {
 
 void editInterval(void(*taskToChange)(), uint32_t newInterval) {
 
-	TaskNode* currentTask = head;
-	bool taskFound = false;
+	TaskSearchResult result = findTask(taskToChange);
 
-	if (currentTask == NULL) {
-		Serial_Println("Error: No hay elementos en la lista para editar");
-		return;
-
+	if (result.found) {
+		result.taskFound->task.interval = newInterval;
 	}
-
-	while (currentTask != NULL) {
-
-		if (taskToChange == currentTask->task.taskFunction) {
-			currentTask->task.interval = newInterval;
-			taskFound = true;
-			break;
-
-		}
-
-		currentTask = currentTask->next;
-
-	}
-
-	if (!taskFound) Serial_Println("Error: No se encontró la tarea especificada");
 
 	return;
 
@@ -73,44 +39,60 @@ void editInterval(void(*taskToChange)(), uint32_t newInterval) {
 
 void deleteTask(void(*taskToDelete)()) {
 
-	TaskNode* currentTask = head;
-	TaskNode* previousTask = NULL;
-	
-	bool taskFound = false;
+	TaskSearchResult result = findTask(taskToDelete);
 
-	if (currentTask == NULL) {
-		Serial_Println("Error: No hay elementos en la lista para eliminar");
-		return;
-
-	}
-
-	while (currentTask != NULL) {
-
-		if (currentTask->task.taskFunction == taskToDelete) {
+	if (result.found) {
 		
-			if (currentTask == head) {
-				head = currentTask->next;
-			}
-			else {
-				previousTask->next = currentTask->next;
-			}
-
-			free(currentTask);
-
-			Serial_Println("La tarea fue eliminada exitosamente");
-			
-			taskFound = true;
-			break;
+		if (result.taskFound == head) {
+			head = result.taskFound->next;
 		}
-		
-		previousTask = currentTask;
-		currentTask = currentTask->next;
-		
-	}
+		else {
+			result.previousTask->next = result.taskFound->next;
+		}
 
-	if (!taskFound) Serial_Println ("Error: No se encontró la tarea especificada");
+		free(result.taskFound);
+		Serial_Println("Task was removed succesfully");
+
+	}
 
 	return;
+
+}
+
+TaskSearchResult findTask(void(*taskToFind)()) {
+
+	TaskSearchResult result;
+
+	result.taskFound = NULL;
+	result.previousTask = NULL;
+	result.found = false;
+
+	TaskNode* currentNode = head;
+	TaskNode* previousNode = NULL;
+
+	if (currentNode == NULL) {
+		Serial_Println("Error: There are no elements in the list");
+		return result;
+	}
+
+	while (currentNode != NULL) {
+
+		if (currentNode->task.taskFunction == taskToFind) {
+			result.taskFound = currentNode;
+			result.previousTask = previousNode;
+			result.found = true;
+				
+			break;
+		}
+
+		previousNode = currentNode;
+		currentNode = currentNode->next;
+
+	}
+
+	if (!result.found) Serial_Println("Error: Task could not be found");
+
+	return result;
 
 }
 

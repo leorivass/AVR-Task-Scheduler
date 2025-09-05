@@ -1,9 +1,36 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
+#include <stdbool.h>
+
 void addTask(uint32_t, void(*)());
 void editInterval(void(*)(), uint32_t);
 void deleteTask(void(*)());
 void executeTasks();
+
+typedef struct Task {
+
+	uint32_t interval;
+	uint32_t lastRunTime;
+	void (*taskFunction)();
+
+} Task;
+
+typedef struct TaskNode {
+
+	Task task;
+	struct TaskNode* next;	
+
+} TaskNode;
+
+typedef struct {
+
+	TaskNode* taskFound;
+	TaskNode* previousTask;
+	bool found;
+
+} TaskSearchResult;
+
+TaskSearchResult findTask(void(*)());
 
 #endif
