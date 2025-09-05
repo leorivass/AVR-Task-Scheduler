@@ -18,6 +18,7 @@ void addTask(uint32_t interval, void(*taskFunction)()) {
 	newNode->task.interval = interval;
 	newNode->task.lastRunTime = 0;
 	newNode->task.taskFunction = taskFunction;
+	newNode->task.status = true;
 	newNode->next = head;
 	head = newNode;
 
@@ -96,13 +97,37 @@ TaskSearchResult findTask(void(*taskToFind)()) {
 
 }
 
+void disableTask(void(*taskToDisable)()) {
+
+	TaskSearchResult result = findTask(taskToDisable);
+
+	if (result.found) {
+		result.taskFound->task.status = false;
+	}
+
+	return;
+
+}
+
+void enableTask(void(*taskToEnable)()) {
+
+	TaskSearchResult result = findTask(taskToEnable);
+
+	if (result.found) {
+		result.taskFound->task.status = true;
+	}
+
+	return;
+
+}
+
 void executeTasks() {
  
 	TaskNode* currentTask = head;
 
 	while (currentTask != NULL) {
 		
-		if (millis() - currentTask->task.lastRunTime >= currentTask->task.interval) {
+		if (millis() - currentTask->task.lastRunTime >= currentTask->task.interval && currentTask->task.status) {
 			currentTask->task.lastRunTime = millis();
 			currentTask->task.taskFunction();
 		}
