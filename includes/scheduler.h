@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-void addTask(uint32_t, void(*)());
+void addTask(uint32_t, void(*)(), bool);
 void editInterval(void(*)(), uint32_t);
 void deleteTask(void(*)());
 void executeTasks();
@@ -16,6 +16,7 @@ typedef struct Task {
 	uint32_t lastRunTime;
 	void (*taskFunction)();
     bool status;
+	bool oneShot;
 
 } Task;
 

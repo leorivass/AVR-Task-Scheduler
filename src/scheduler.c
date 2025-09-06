@@ -6,7 +6,7 @@
 
 TaskNode* head = NULL;
 
-void addTask(uint32_t interval, void(*taskFunction)()) {
+void addTask(uint32_t interval, void(*taskFunction)(), bool oneShot) {
 
 	TaskNode* newNode = (TaskNode*)malloc(sizeof(TaskNode));
 
@@ -19,6 +19,7 @@ void addTask(uint32_t interval, void(*taskFunction)()) {
 	newNode->task.lastRunTime = 0;
 	newNode->task.taskFunction = taskFunction;
 	newNode->task.status = true;
+	newNode->task.oneShot = oneShot;
 	newNode->next = head;
 	head = newNode;
 
@@ -124,18 +125,32 @@ void enableTask(void(*taskToEnable)()) {
 void executeTasks() {
  
 	TaskNode* currentTask = head;
+	bool oneShotFlag;
 
 	while (currentTask != NULL) {
+
+		oneShotFlag = false;
 		
 		if (millis() - currentTask->task.lastRunTime >= currentTask->task.interval && currentTask->task.status) {
 			currentTask->task.lastRunTime = millis();
 			currentTask->task.taskFunction();
+
+			if (currentTask->task.oneShot) {
+				TaskNode* taskToDelete = currentTask;
+				currentTask = currentTask->next;
+
+				oneShotFlag = true;
+
+				deleteTask(taskToDelete->task.taskFunction);
+			}
+
 		}
 	
-		currentTask = currentTask->next;
+		if (!oneShotFlag) currentTask = currentTask->next;
 
 	}
 
 	return;
 
 }
+  
