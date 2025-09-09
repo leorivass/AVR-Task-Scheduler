@@ -22,8 +22,8 @@ void welcomeMessage() {
 	Serial_Println("***********LED2 blinks every 1000ms*************");
 	Serial_Println("******The pattern will change after 20s*********\n");
 
-	enableTask(blinkTask1); // First blink task will start
-	enableTask(blinkTask2); // Second blink task will start
+	enableTask(blinkTask1); // First blink task starting...
+	enableTask(blinkTask2); // Second blink task staring...
 
 	return;
 }
