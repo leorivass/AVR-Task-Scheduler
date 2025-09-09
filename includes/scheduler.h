@@ -3,13 +3,6 @@
 
 #include <stdbool.h>
 
-void addTask(uint32_t, void(*)(), bool);
-void editInterval(void(*)(), uint32_t);
-void deleteTask(void(*)());
-void executeTasks();
-void disableTask(void(*)());
-void enableTask(void(*)());
-
 typedef struct Task {
 
 	uint32_t interval;
@@ -20,21 +13,24 @@ typedef struct Task {
 
 } Task;
 
+struct TaskNode;
+typedef struct TaskNode* TaskHandle;
+
 typedef struct TaskNode {
 
 	Task task;
-	struct TaskNode* next;	
+	TaskHandle ID;
+	TaskHandle next;	
 
 } TaskNode;
 
-typedef struct {
+TaskHandle addTask(uint32_t, void(*)(), bool);
 
-	TaskNode* taskFound;
-	TaskNode* previousTask;
-	bool found;
+void editInterval(TaskHandle, uint32_t);
+void deleteTask(TaskHandle);
+void disableTask(TaskHandle);
+void enableTask(TaskHandle);
 
-} TaskSearchResult;
-
-TaskSearchResult findTask(void(*)());
+void executeTasks();
 
 #endif
