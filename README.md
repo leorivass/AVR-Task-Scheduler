@@ -9,11 +9,26 @@ A simple linked list-based task scheduler implemented in C for AVR microcontroll
 - Enable/disable tasks at runtime
 - Execute tasks based on millis()
 
-## Example Usage
-The included `main.c` demonstrates the scheduler functionality with a simple LED blinking example.
-
 ## Requirements
 - AVR-GCC toolchain
-- ATmega2560 or compatible AVR microcontroller
+- CMake
+- Atmega2560 or compatible AVR microcontroller
 
+## Usage
 
+### 1. Clone the repository
+```bash
+git clone https://github.com/leorivass/AVR-Task-Scheduler.git
+```
+
+### 2. Compile the task scheduler in the build directory
+```bash
+make
+```
+
+### 3. Flash the program to the microcontroller
+```bash
+make flash
+```
+
+> **Note:** The `main.c` program includes an example to demonstrate the scheduler functionality.
