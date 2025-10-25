@@ -21,12 +21,18 @@ A simple linked list-based task scheduler implemented in C for AVR microcontroll
 git clone https://github.com/leorivass/AVR-Task-Scheduler.git
 ```
 
-### 2. Compile the task scheduler in the build directory
+### 2. Init CMake in the build directory
+```bash
+cd build
+cmake ..
+```
+
+### 3. Compile the task scheduler in the build directory
 ```bash
 make
 ```
 
-### 3. Flash the program to the microcontroller
+### 4. Flash the program to the microcontroller
 ```bash
 make flash
 ```
