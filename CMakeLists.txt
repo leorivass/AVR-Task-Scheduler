@@ -7,8 +7,14 @@ set(F_CPU 16000000UL)
 set(CMAKE_C_COMPILER avr-gcc)
 set(CMAKE_C_FLAGS "-mmcu=${MCU} -DF_CPU=${F_CPU} -Os")
 
-include_directories(${CMAKE_SOURCE_DIR}/includes)
-file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/src/*.c)
+include_directories(${CMAKE_SOURCE_DIR}/include)
+set(SOURCES
+    src/main.c
+    src/core/mcu_init.c
+    src/core/scheduler.c
+    src/drivers/usart.c
+    src/utils/millis.c
+)
 
 add_executable(main.helf ${SOURCES})
 

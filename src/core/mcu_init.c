@@ -1,5 +1,5 @@
 #include <avr/io.h>
-#include "mcu_init.h"
+#include "core/mcu_init.h"
 
 #define LED1	3
 #define LED2	4

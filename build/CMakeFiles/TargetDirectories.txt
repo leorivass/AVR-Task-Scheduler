@@ -1,5 +1,5 @@
-/home/leonel/oldAtmega/scheduler/build/CMakeFiles/main.helf.dir
-/home/leonel/oldAtmega/scheduler/build/CMakeFiles/create_hex.dir
-/home/leonel/oldAtmega/scheduler/build/CMakeFiles/flash.dir
-/home/leonel/oldAtmega/scheduler/build/CMakeFiles/edit_cache.dir
-/home/leonel/oldAtmega/scheduler/build/CMakeFiles/rebuild_cache.dir
+/home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler/build/CMakeFiles/main.helf.dir
+/home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler/build/CMakeFiles/create_hex.dir
+/home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler/build/CMakeFiles/flash.dir
+/home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler/build/CMakeFiles/edit_cache.dir
+/home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler/build/CMakeFiles/rebuild_cache.dir

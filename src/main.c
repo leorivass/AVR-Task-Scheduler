@@ -1,10 +1,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include "mcu_init.h"
-#include "millis.h"
-#include "scheduler.h"
-#include "usart.h"
+
+#include "core/scheduler.h"
+#include "core/mcu_init.h"
+#include "utils/millis.h"
+#include "drivers/usart.h"
 
 #define LED1 3
 #define LED2 4

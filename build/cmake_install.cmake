@@ -1,4 +1,4 @@
-# Install script for directory: /home/leonel/oldAtmega/scheduler
+# Install script for directory: /home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/leonel/oldAtmega/scheduler/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/leorivass/studying/linux_driver_tutorial/AVR-Task-Scheduler/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

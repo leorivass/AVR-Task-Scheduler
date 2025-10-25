@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "millis.h"
+
+#include "utils/millis.h"
 
 volatile uint32_t miliseconds = 0;
 

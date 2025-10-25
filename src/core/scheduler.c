@@ -1,8 +1,10 @@
 #include <avr/io.h>
 #include <stdlib.h>
-#include "millis.h"
-#include "scheduler.h"
-#include "usart.h"
+
+#include "core/scheduler.h"
+#include "drivers/usart.h"
+#include "utils/millis.h"
+
 
 TaskHandle head = NULL;
 
