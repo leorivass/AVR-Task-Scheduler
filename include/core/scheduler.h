@@ -24,13 +24,21 @@ typedef struct TaskNode {
 
 } TaskNode;
 
+typedef enum {
+
+	SCHDLR_OK,
+	SCHDLR_ERR_NULL,
+	SCHDLR_ERR_NO_TASKS,
+
+} scheduler_error_t;
+
 TaskHandle addTask(uint32_t, void(*)(), bool);
 
-void editInterval(TaskHandle, uint32_t);
-void deleteTask(TaskHandle);
-void disableTask(TaskHandle);
-void enableTask(TaskHandle);
+int editInterval(TaskHandle, uint32_t);
+int deleteTask(TaskHandle);
+int disableTask(TaskHandle);
+int enableTask(TaskHandle);
 
-void executeTasks();
+int executeTasks();
 
 #endif

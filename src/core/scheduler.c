@@ -5,18 +5,14 @@
 #include "drivers/usart.h"
 #include "utils/millis.h"
 
-
 TaskHandle head = NULL;
 
 TaskHandle addTask(uint32_t interval, void(*taskFunction)(), bool oneShot) {
 
 	TaskHandle newNode = (TaskHandle)malloc(sizeof(TaskNode));
 
-	if (newNode == NULL) {
-        Serial_Println("Error: Memory could not be assigned for the task");
-        return NULL;
-    }
-	
+	if (newNode == NULL) return NULL;
+
 	newNode->task.interval = interval;
 	newNode->task.lastRunTime = 0;
 	newNode->task.taskFunction = taskFunction;
@@ -27,23 +23,23 @@ TaskHandle addTask(uint32_t interval, void(*taskFunction)(), bool oneShot) {
 	head = newNode;
 
 	return newNode;
-
 }
 
-void editInterval(TaskHandle taskToChange, uint32_t newInterval) {
+int editInterval(TaskHandle taskToChange, uint32_t newInterval) {
+
+	if (taskToChange == NULL) return -SCHDLR_ERR_NULL;
+
 	taskToChange->task.interval = newInterval;
-	return;
+	return SCHDLR_OK;
 }
 
-void deleteTask(TaskHandle taskToDelete) {
+int deleteTask(TaskHandle taskToDelete) {
 
 	TaskNode* currentNode = head;
 	TaskNode* previousNode = NULL;
 
-	if (currentNode == NULL) {
-		Serial_Println("Error: There are no elements in the list");
-		return;
-	}
+	if (taskToDelete == NULL) return -SCHDLR_ERR_NULL;
+	if (currentNode == NULL)  return -SCHDLR_ERR_NO_TASKS;
 
 	while (currentNode != NULL) {
 
@@ -59,27 +55,34 @@ void deleteTask(TaskHandle taskToDelete) {
 
 	free(currentNode);
 
-	return;
-
+	return SCHDLR_OK;
 }
 
-void disableTask(TaskHandle taskToDisable) {
+int disableTask(TaskHandle taskToDisable) {
+
+	if (taskToDisable == NULL) return -SCHDLR_ERR_NULL;
+
 	taskToDisable->task.status = false;
-	return;
+	return SCHDLR_OK;
 }
 
-void enableTask(TaskHandle taskToEnable) {
+int enableTask(TaskHandle taskToEnable) {
+
+	if (taskToEnable == NULL) return -SCHDLR_ERR_NULL;
+
 	taskToEnable->task.status = true;
-	return;
+	return SCHDLR_OK;
 }
 
-void executeTasks() {
+int executeTasks() {
  
 	TaskNode* currentTask = head;
 	TaskNode* oldTask = NULL;
 	bool oneShotFlag;
 
 	uint32_t currentMillis = millis();
+
+	if (currentTask == NULL) return -SCHDLR_ERR_NO_TASKS;
 
 	while (currentTask != NULL) {
 
@@ -104,6 +107,5 @@ void executeTasks() {
 		}
 	}
 
-	return;
-
+	return SCHDLR_OK;
 }
