@@ -57,16 +57,16 @@ int main() {
 	sei();
 
 	// Welcome message task (oneShot)
-	welcomeTask = addTask(2000, welcomeMessage, true); // Welcome message will be shown after 2s
+	addTask(welcomeTask, 2000, welcomeMessage, true); // Welcome message will be shown after 2s
 
 	// Main tasks 
-	blinkTask1 = addTask(500, toggleLED1, false); // LED1 blinks every 500ms
+	addTask(blinkTask1, 500, toggleLED1, false); // LED1 blinks every 500ms
 	disableTask(blinkTask1); // blinkTask1 will start disabled
 
-	blinkTask2 = addTask(1000, toggleLED2, false); // LED2 blinks every 1s
+	addTask(blinkTask2, 1000, toggleLED2, false); // LED2 blinks every 1s
 	disableTask(blinkTask2); // blinkTask2 will start disabled
 
-	changePatternTask = addTask(20000, changePattern, true); // Change blinky pattern for each LED
+	addTask(changePatternTask, 20000, changePattern, true); // Change blinky pattern for each LED
 
 	while (1) {
 		executeTasks();

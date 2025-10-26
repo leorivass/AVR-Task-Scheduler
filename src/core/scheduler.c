@@ -2,16 +2,15 @@
 #include <stdlib.h>
 
 #include "core/scheduler.h"
-#include "drivers/usart.h"
 #include "utils/millis.h"
 
 TaskHandle head = NULL;
 
-TaskHandle addTask(uint32_t interval, void(*taskFunction)(), bool oneShot) {
+int addTask(TaskHandle taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot) {
 
 	TaskHandle newNode = (TaskHandle)malloc(sizeof(TaskNode));
 
-	if (newNode == NULL) return NULL;
+	if (newNode == NULL) return -SCHDLR_ERR_TASK_NOT_CREATED;
 
 	newNode->task.interval = interval;
 	newNode->task.lastRunTime = 0;
@@ -20,9 +19,10 @@ TaskHandle addTask(uint32_t interval, void(*taskFunction)(), bool oneShot) {
 	newNode->task.oneShot = oneShot;
 	newNode->next = head;
 	newNode->ID = newNode;
+	taskHandle = newNode;
 	head = newNode;
 
-	return newNode;
+	return SCHDLR_OK;
 }
 
 int editInterval(TaskHandle taskToChange, uint32_t newInterval) {

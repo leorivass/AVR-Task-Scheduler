@@ -29,15 +29,16 @@ typedef enum {
 	SCHDLR_OK,
 	SCHDLR_ERR_NULL,
 	SCHDLR_ERR_NO_TASKS,
+	SCHDLR_ERR_TASK_NOT_CREATED
 
 } scheduler_error_t;
 
-TaskHandle addTask(uint32_t, void(*)(), bool);
+int addTask(TaskHandle taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot);
 
-int editInterval(TaskHandle, uint32_t);
-int deleteTask(TaskHandle);
-int disableTask(TaskHandle);
-int enableTask(TaskHandle);
+int editInterval(TaskHandle taskToChange, uint32_t newInterval);
+int deleteTask(TaskHandle taskToDelete);
+int disableTask(TaskHandle taskToDisable);
+int enableTask(TaskHandle taskToEnable);
 
 int executeTasks();
 
