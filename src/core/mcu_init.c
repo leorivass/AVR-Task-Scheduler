@@ -1,25 +1,21 @@
 #include <avr/io.h>
 #include "core/mcu_init.h"
-
-#define LED1	3
-#define LED2	4
+#include "drivers/gpio.h"
 
 void GPIO_init() {
 
-	// Set LED pins as an output
-	DDRA = (1 << LED1) | (1 << LED2);
+	gpio_set_direction(LED1, OUTPUT);
+	gpio_set_direction(LED2, OUTPUT);
 
-	// Initialise outputs to low level
-	PORTA &= ~(1 << LED1);
-	PORTA &= ~(1 << LED2);
+	gpio_set_value(LED1, LOW);
+	gpio_set_value(LED2, LOW);
 
 	return;
-
 }
 
 void TMR0_init() {
 	
-	// Initialise counter to 0
+	/* Initialise counter to 0 */
 	TCNT0 = 0;
 
 	/* Enable CTC mode
@@ -50,5 +46,4 @@ void TMR0_init() {
 	TIMSK0 |= (1 << OCIE0A);
 
 	return;
-	
 }
