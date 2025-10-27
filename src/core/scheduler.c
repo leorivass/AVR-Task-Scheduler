@@ -6,7 +6,7 @@
 
 TaskHandle head = NULL;
 
-int addTask(TaskHandle taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot) {
+int addTask(TaskHandle* taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot) {
 
 	TaskHandle newNode = (TaskHandle)malloc(sizeof(TaskNode));
 
@@ -19,7 +19,7 @@ int addTask(TaskHandle taskHandle, uint32_t interval, void(*taskFunction)(), boo
 	newNode->task.oneShot = oneShot;
 	newNode->next = head;
 	newNode->ID = newNode;
-	taskHandle = newNode;
+	*taskHandle = newNode;
 	head = newNode;
 
 	return SCHDLR_OK;

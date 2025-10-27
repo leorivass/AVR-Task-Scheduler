@@ -33,7 +33,7 @@ typedef enum {
 
 } scheduler_error_t;
 
-int addTask(TaskHandle taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot);
+int addTask(TaskHandle* taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot);
 
 int editInterval(TaskHandle taskToChange, uint32_t newInterval);
 int deleteTask(TaskHandle taskToDelete);

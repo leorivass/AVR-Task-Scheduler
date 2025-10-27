@@ -6,9 +6,7 @@
 #include "core/mcu_init.h"
 #include "utils/millis.h"
 #include "drivers/usart.h"
-
-#define LED1 3
-#define LED2 4
+#include "drivers/gpio.h"
 
 TaskHandle welcomeTask;
 TaskHandle blinkTask1;
@@ -30,12 +28,26 @@ void welcomeMessage() {
 }
 
 void toggleLED1() {
-	PORTA ^= (1 << LED1);
+	
+	if (gpio_get_value(LED1) == 0) {
+		gpio_set_value(LED1, HIGH);
+	}
+	else {
+		gpio_set_value(LED1, LOW);
+	}
+
 	return;
 }
 
 void toggleLED2() {
-	PORTA ^= (1 << LED2);
+	
+	if (gpio_get_value(LED2) == 0) {
+		gpio_set_value(LED2, HIGH);
+	}
+	else {
+		gpio_set_value(LED2, LOW);
+	}
+
 	return;
 }
 
@@ -57,16 +69,16 @@ int main() {
 	sei();
 
 	// Welcome message task (oneShot)
-	addTask(welcomeTask, 2000, welcomeMessage, true); // Welcome message will be shown after 2s
+	addTask(&welcomeTask, 2000, welcomeMessage, true); // Welcome message will be shown after 2s
 
 	// Main tasks 
-	addTask(blinkTask1, 500, toggleLED1, false); // LED1 blinks every 500ms
+	addTask(&blinkTask1, 500, toggleLED1, false); // LED1 blinks every 500ms
 	disableTask(blinkTask1); // blinkTask1 will start disabled
 
-	addTask(blinkTask2, 1000, toggleLED2, false); // LED2 blinks every 1s
+	addTask(&blinkTask2, 1000, toggleLED2, false); // LED2 blinks every 1s
 	disableTask(blinkTask2); // blinkTask2 will start disabled
 
-	addTask(changePatternTask, 20000, changePattern, true); // Change blinky pattern for each LED
+	addTask(&changePatternTask, 20000, changePattern, true); // Change blinky pattern for each LED
 
 	while (1) {
 		executeTasks();
