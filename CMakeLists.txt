@@ -12,8 +12,9 @@ set(SOURCES
     src/main.c
     src/core/mcu_init.c
     src/core/scheduler.c
-    src/drivers/usart.c
     src/utils/millis.c
+    src/drivers/usart.c
+    src/drivers/gpio.c 
 )
 
 add_executable(main.helf ${SOURCES})
