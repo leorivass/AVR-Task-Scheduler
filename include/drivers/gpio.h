@@ -17,7 +17,7 @@ typedef struct pins_desc {
     volatile uint8_t *ddr;
     volatile uint8_t *port;
     volatile uint8_t *pin;
-    const uint8_t digitalPins[8]; 
+    const int8_t digitalPins[8]; 
     uint8_t bit;
 } pins_desc;
 
