@@ -5,6 +5,7 @@
 #include "utils/millis.h"
 
 TaskHandle head = NULL;
+TaskHandle previousNode = NULL;
 
 int addTask(TaskHandle* taskHandle, uint32_t interval, void(*taskFunction)(), bool oneShot) {
 
@@ -17,10 +18,14 @@ int addTask(TaskHandle* taskHandle, uint32_t interval, void(*taskFunction)(), bo
 	newNode->task.taskFunction = taskFunction;
 	newNode->task.status = true;
 	newNode->task.oneShot = oneShot;
-	newNode->next = head;
 	newNode->ID = newNode;
 	*taskHandle = newNode;
-	head = newNode;
+
+	if (head == NULL) head = newNode;
+	else previousNode->next = newNode;
+
+	newNode->next = NULL;
+	previousNode = newNode;
 
 	return SCHDLR_OK;
 }
