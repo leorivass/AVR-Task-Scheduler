@@ -12,6 +12,7 @@ TaskHandle welcomeTask;
 TaskHandle blinkTask1;
 TaskHandle blinkTask2;
 TaskHandle changePatternTask;
+TaskHandle deleteAllTasks;
 
 void welcomeMessage() {
 
@@ -21,8 +22,8 @@ void welcomeMessage() {
 	Serial_Println("***********LED2 blinks every 1000ms*************");
 	Serial_Println("******The pattern will change after 20s*********\n");
 
-	enableTask(blinkTask1); // First blink task starting...
-	enableTask(blinkTask2); // Second blink task staring...
+	enableTask(blinkTask1); 
+	enableTask(blinkTask2); 
 
 	return;
 }
@@ -52,10 +53,18 @@ void toggleLED2() {
 }
 
 void changePattern() {
-	editInterval(blinkTask1, 2000); // LED1 blinks every 2s
+	editInterval(blinkTask1, 2000);
 	Serial_Println("Now, LED1 blinks every 2s!");
-	editInterval(blinkTask2, 5000); // LED2 blinks every 5s
+	editInterval(blinkTask2, 5000); 
 	Serial_Println("Now, LED2 blinks every 5s!");
+}
+
+void deleteAddedTasks() {
+	deleteTask(welcomeTask);
+	deleteTask(blinkTask1);
+	deleteTask(blinkTask2);
+	deleteTask(changePatternTask);
+	deleteTask(deleteAddedTasks);
 }
 
 int main() {
@@ -68,17 +77,22 @@ int main() {
 
 	sei();
 
-	// Welcome message task (oneShot)
-	addTask(&welcomeTask, 2000, welcomeMessage, true); // Welcome message will be shown after 2s
+	/* Welcome message task (oneShot) */
+	addTask(&welcomeTask, 2000, welcomeMessage, true); 
 
-	// Main tasks 
-	addTask(&blinkTask1, 500, toggleLED1, false); // LED1 blinks every 500ms
-	disableTask(blinkTask1); // blinkTask1 will start disabled
+	/* LED1 blinks every 500ms */
+	addTask(&blinkTask1, 500, toggleLED1, false);  
+	disableTask(blinkTask1);
 
-	addTask(&blinkTask2, 1000, toggleLED2, false); // LED2 blinks every 1s
-	disableTask(blinkTask2); // blinkTask2 will start disabled
+	/* LED2 blinks every 1s */
+	addTask(&blinkTask2, 1000, toggleLED2, false);  
+	disableTask(blinkTask2); 
 
-	addTask(&changePatternTask, 20000, changePattern, true); // Change blinky pattern for each LED
+	/* Change blinky pattern for each LED (oneShot) */
+	addTask(&changePatternTask, 20000, changePattern, true); 
+
+	/* Delete all added tasks (oneShot) */
+	addTask(&deleteAllTasks, 30000, deleteAddedTasks, true);
 
 	while (1) {
 		executeTasks();
