@@ -4,11 +4,11 @@
 
 void GPIO_init() {
 
-	gpio_set_direction(LED1, OUTPUT);
-	gpio_set_direction(LED2, OUTPUT);
+	gpio_set_direction(&DDRH, 5, OUTPUT);
+	gpio_set_direction(&DDRE, 4, OUTPUT);
 
-	gpio_set_value(LED1, LOW);
-	gpio_set_value(LED2, LOW);
+	gpio_set_value(&PORTH, 5, LOW);
+	gpio_set_value(&PORTE, 4, LOW);
 
 	return;
 }

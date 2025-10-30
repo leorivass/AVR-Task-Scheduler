@@ -30,23 +30,23 @@ void welcomeMessage() {
 
 void toggleLED1() {
 	
-	if (gpio_get_value(LED1) == 0) {
-		gpio_set_value(LED1, HIGH);
+	if (gpio_get_value(&PINE, 4) == LOW) {
+		gpio_set_value(&PORTE, 4, HIGH);
 	}
 	else {
-		gpio_set_value(LED1, LOW);
+		gpio_set_value(&PORTE, 4, LOW);
 	}
 
 	return;
 }
 
 void toggleLED2() {
-	
-	if (gpio_get_value(LED2) == 0) {
-		gpio_set_value(LED2, HIGH);
+
+	if (gpio_get_value(&PINH, 5) == LOW) {
+		gpio_set_value(&PORTH, 5, HIGH);
 	}
 	else {
-		gpio_set_value(LED2, LOW);
+		gpio_set_value(&PORTH, 5, LOW);
 	}
 
 	return;
@@ -64,7 +64,7 @@ void deleteAddedTasks() {
 	deleteTask(blinkTask1);
 	deleteTask(blinkTask2);
 	deleteTask(changePatternTask);
-	deleteTask(deleteAddedTasks);
+	deleteTask(deleteAllTasks);
 }
 
 int main() {

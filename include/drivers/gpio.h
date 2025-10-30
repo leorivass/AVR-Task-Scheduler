@@ -4,6 +4,15 @@
 #include <avr/io.h>
 
 typedef enum {
+    GPIO_OK,
+    GPIO_ERR_INVALID_DIRECTION,
+    GPIO_ERR_INVALID_STATUS,
+    GPIO_ERR_INVALID_BIT,
+    GPIO_ERR_REGISTER_NOT_EXIST,
+    GPIO_ERR_UNKNOWN
+} gpio_err_t;
+
+typedef enum {
     INPUT, 
     OUTPUT, 
 } direction;
@@ -13,21 +22,11 @@ typedef enum {
     HIGH 
 } output_status;
 
-typedef struct pins_desc {
-    volatile uint8_t *ddr;
-    volatile uint8_t *port;
-    volatile uint8_t *pin;
-    const int8_t digitalPins[8]; 
-    uint8_t bit;
-} pins_desc;
-
-pins_desc find_gpio_desc(uint8_t pin);
-
 /* Function to declare a pin as an output or input */
-void gpio_set_direction(uint8_t pin, direction direction);
+int gpio_set_direction(volatile uint8_t *DDR, uint8_t bit, direction dir);
 
 /* Function to interact with the pins */
-void gpio_set_value(uint8_t pin, output_status status);
-int gpio_get_value(uint8_t pin);
+int gpio_set_value(volatile uint8_t *PORT, uint8_t bit, output_status status);
+int gpio_get_value(volatile uint8_t *PIN, uint8_t bit);
 
 #endif
